@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class DemoController extends AbstractController
 {
@@ -56,4 +57,33 @@ class DemoController extends AbstractController
 
         return new Response('<body>'.$slug.'</body>');
     }
+
+    /**
+     *  on va creer deux nouvelles routes :
+     * /voir-session : afficher le contenu de la clé name dans la session
+     *                  n'affiche rien lors de la premiére visite sur le site
+     * /mettre-en-session/{name} : Mettre en session la valeur passée dans l'url
+     * 
+     */
+
+     /**
+      * @Route("/voir-session", name="show_session")
+      */
+      public function showSession(SessionInterface $session) 
+      {
+          dump($session->get('name'));
+          
+          return $this->render('demo/show_session.html.twig');
+      }
+
+      /**
+       * @Route("/mettre-en-session/{name}", name="put_session")
+       */
+      public function putSession($name, SessionInterface $session) 
+      {
+        // Je mets $name en session
+        $session->set('name', $name); // equivant à $_SESSION['name'] = $name;
+
+        return $this->redirectToRoute('show_session');
+      }
 }
