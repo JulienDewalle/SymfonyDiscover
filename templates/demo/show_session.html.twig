@@ -2,8 +2,13 @@
 
 {% block body %}
 
-    <a href="{{ path('put_session', { name: 'Julien'}) }}">Mettre en session Julien</a>
-    <br>
-    <a href="{{ path('put_session', { name: 'toto'}) }}">Mettre en session Toto</a>
+    <a href="{{ path('put_session', { name: 'nicolas' }) }}">Mettre en session Nicolas</a> <br />
+    <a href="{{ path('put_session', { name: 'toto' }) }}">Mettre en session Toto</a>
 
+    <h2>Les message flashs :</h2>
+    {% for message in app.flashes('success') %}
+    <div>
+        {{ message }} 
+    </div> 
+    {% endfor %}
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class DemoController extends AbstractController
@@ -77,13 +78,31 @@ class DemoController extends AbstractController
       }
 
       /**
-       * @Route("/mettre-en-session/{name}", name="put_session")
-       */
-      public function putSession($name, SessionInterface $session) 
-      {
+     * @Route("/mettre-en-session/{name}", name="put_session")
+     */
+    public function putSession($name, SessionInterface $session)
+    {
         // Je mets $name en session
-        $session->set('name', $name); // equivant à $_SESSION['name'] = $name;
+        $session->set('name', $name); // Equivaut à $_SESSION['name'] = $name;
+
+        // on peut crée un message flash
+        $this->addFlash('success', 'Message de succès');
 
         return $this->redirectToRoute('show_session');
-      }
+    }
+
+    /**
+     * @Route("/protected.pdf", name="cv")
+     */
+    public function dowloadCv() 
+    {
+        $authorized = (bool) rand(0, 1);
+        if ($authorized){
+            throw $this->createNotFoundException('Vous ne pouvez pas récuperez ce CV.');
+        }
+        return  $this->file(
+            '../CV-julien-Dewalle.pdf',
+             'new_file.pdf',
+              ResponseHeaderBag::DISPOSITION_INLINE);
+    }
 }
