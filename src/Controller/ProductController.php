@@ -104,7 +104,7 @@ class ProductController extends AbstractController
      */
     public function order($slug)
     {
-        // message flash pour la comma,nde du produit
+        // message flash pour la commande du produit
         $this->addFlash('success', 'Nous avons bien pris en compte votre commande de ' . $slug);
 
         return $this->redirectToRoute('product_list');

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+<div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        <div class="text-center">
+            <button class="btn btn-primary text-warning mb-3">Envoyer message</button>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

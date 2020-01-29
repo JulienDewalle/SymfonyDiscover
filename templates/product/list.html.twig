@@ -23,7 +23,7 @@
               <td>{{ product.name }}</td>
               <td>{{ product.description }}</td>
               <td>{{ product.price }}€</td>
-              <td><a href="{{ path('product_show', {slug: product.slug}) }}" class="btn btn-secondary">Voir le produit</a></td> 
+              <td><a href="{{ path('product_show', {slug: product.slug}) }}" class="btn btn-primary text-warning">Voir le produit</a></td>
             </tr>
             {% endfor %}
           </tbody>
