@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Model\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Test\Constraint\EmailTextBodyContains;
 
 class ProductController extends AbstractController 
 {
@@ -49,9 +54,27 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/create", name="product_create")
      */
-    public function create()
+    public function create(Request $request)
     {
-        return $this->render('product/create.html.twig');
+        $product = new Product();
+        dump($product);
+
+        $form = $this->createFormBuilder($product)
+            ->add('name', TextType::class)
+            ->add('description', TextareaType::class)
+            ->getForm();
+
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()) {
+                dump($form->getData());
+                dump($product);
+                //redirige bdd email ...
+            }
+
+            return $this->render('product/create.html.twig', [
+                'form' => $form->createView(),
+            ]);
     }
 
     /**

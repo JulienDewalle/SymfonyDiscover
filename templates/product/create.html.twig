@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    @todo faire un formulaire
+<div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        <div class="text-center">
+            <button class="btn btn-primary text-warning mb-3">Ajouter le produit</button>
+        </div>
+    {{ form_end(form) }}
+</div>
 {% endblock %}
